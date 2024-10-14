@@ -1,0 +1,8 @@
+title = "Gitleaks Sandbox Config"
+
+[extend]
+	useDefault = true
+
+[allowlist]
+	description = "Allowing dummy values in foo/allowlist to test things"
+	paths = ['''(^|/)foo/allowlist/.*?$''']

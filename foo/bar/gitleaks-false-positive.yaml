@@ -1,0 +1,4 @@
+# This is file that contains a false positive for Gitleaks to detect
+# It should be properly ignored in the .gitleaksignore file as well and not
+# trigger a violation
+aws_token: "AKIALALEMEL33243OLIA"

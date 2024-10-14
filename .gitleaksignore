@@ -1,1 +1,5 @@
 # https://github.com/gitleaks/gitleaks
+
+# This a a false positive taken from the official repo:
+# https://github.com/gitleaks/gitleaks/tree/8ea608595ce1c992166d710b217f59965d7a44d7/testdata/repos/nogit
+foo/bar/gitleaks-false-positive.yaml:aws-access-token:4
