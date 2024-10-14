@@ -96,6 +96,19 @@ jobs:
           Move-Item -Path .\gitleaks\gitleaks.exe -Destination .\gitleaks.exe
           Remove-Item -Path .\gitleaks -Force -Recurse
           .\gitleaks.exe dir --verbose --redact .
+      - name: Install Gitleaks
+        env:
+          GITLEAKS_VERSION: "8.20.1"
+          GITLEAKS_SHASUM: "f23010173c6a0fa03cf8148d32a83e40417127e43fb54808fa27bf8aece20111"
+        run: |
+          curl --fail --silent --show-error --location --output gitleaks.zip \
+            https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_windows_x64.zip
+          echo "${GITLEAKS_SHASUM} gitleaks.zip" | sha256sum --check
+          unzip gitleaks.zip
+          mv ./gitleaks/gitleaks.exe ./gitleaks.exe
+          rm -rf ./gitleaks
+          ./gitleaks.exe dir --verbose --redact .
+        shell: bash
   hadolint:
     runs-on: ubuntu-latest
     if: ${{ inputs.hadolint || false }}
