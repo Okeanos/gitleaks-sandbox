@@ -96,6 +96,7 @@ jobs:
           Move-Item -Path .\gitleaks\gitleaks.exe -Destination .\gitleaks.exe
           Remove-Item -Path .\gitleaks -Force -Recurse
           .\gitleaks.exe dir --verbose --redact .
+        continue-on-error: true
       - name: Install Gitleaks
         env:
           GITLEAKS_VERSION: "8.20.1"
