@@ -105,7 +105,7 @@ jobs:
           curl --fail --silent --show-error --location --output gitleaks.zip \
             https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_windows_x64.zip
           echo "${GITLEAKS_SHASUM} gitleaks.zip" | sha256sum --check
-          unzip gitleaks.zip
+          unzip gitleaks.zip -d gitleaks
           mv ./gitleaks/gitleaks.exe ./gitleaks.exe
           rm -rf ./gitleaks
           ./gitleaks.exe dir --verbose --redact .
