@@ -84,13 +84,16 @@ jobs:
       - name: Install Gitleaks
         env:
           GITLEAKS_VERSION: "8.20.1"
-          GITLEAKS_SHASUM: "8c0fdf050ec8bd9f8b5f4833c6dc81f4c20cb35625418216924949a22b6030bc"
+          GITLEAKS_SHASUM: "f23010173c6a0fa03cf8148d32a83e40417127e43fb54808fa27bf8aece20111"
         run: |
-          curl --fail --silent --show-error --location --output gitleaks.tar.gz \
-            https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz
-          echo "${GITLEAKS_SHASUM} gitleaks.tar.gz" | sha256sum --check
-          tar -xzf gitleaks.tar.gz gitleaks
-          ./gitleaks dir --verbose --redact .
+          Invoke-WebRequest -OutFile gitleaks.zip -Uri "https://github.com/gitleaks/gitleaks/releases/download/v$( $ENV:GITLEAKS_VERSION )/gitleaks_$( $ENV:GITLEAKS_VERSION )_windows_x64.zip"
+          If (!(Get-FileHash gitleaks.zip).Hash -eq $( $ENV:GITLEAKS_SHASUM ))
+          {
+            Write-Host "Checksum test failed. Downloaded file may be corrupt."
+            Exit 1
+          }
+          Expand-Archive -LiteralPath gitleaks.zip
+          .\gitleaks\gitleaks.exe dir --verbose --redact .
   hadolint:
     runs-on: ubuntu-latest
     if: ${{ inputs.hadolint || false }}
