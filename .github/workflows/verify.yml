@@ -93,6 +93,8 @@ jobs:
             Exit 1
           }
           Expand-Archive -LiteralPath gitleaks.zip
+          Move-Item -Path .\gitleaks\gitleaks.exe -Destination .\gitleaks.exe
+          Remove-Item -Path .\gitleaks -Force -Recurse
           .\gitleaks\gitleaks.exe dir --verbose --redact .
   hadolint:
     runs-on: ubuntu-latest
