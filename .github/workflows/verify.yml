@@ -81,7 +81,7 @@ jobs:
     if: ${{ inputs.gitleaks || true }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install Gitleaks
+      - name: Gitleaks PowerShell
         env:
           GITLEAKS_VERSION: "8.20.1"
           GITLEAKS_SHASUM: "f23010173c6a0fa03cf8148d32a83e40417127e43fb54808fa27bf8aece20111"
@@ -97,7 +97,7 @@ jobs:
           Remove-Item -Path .\gitleaks -Force -Recurse
           .\gitleaks.exe dir --verbose --redact .
         continue-on-error: true
-      - name: Install Gitleaks
+      - name: Gitleaks Bash
         env:
           GITLEAKS_VERSION: "8.20.1"
           GITLEAKS_SHASUM: "f23010173c6a0fa03cf8148d32a83e40417127e43fb54808fa27bf8aece20111"
