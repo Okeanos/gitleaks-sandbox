@@ -21,6 +21,12 @@ curl --fail --silent --show-error --location --output "${target}/gitleaks.tar.gz
 GITLEAKS_SHASUM_NEW=$(sha256sum "${target}/gitleaks.tar.gz" | cut -d' ' -f1)
 sed -i "s/${GITLEAKS_SHASUM_OLD}/${GITLEAKS_SHASUM_NEW}/" "${script_dir}/../.mise.toml"
 
+GITLEAKS_WINDOWS_SHASUM_OLD=$(grep -F 'gitleaks' "${script_dir}/../.mise.toml" | cut -d '=' -f4 | xargs)
+curl --fail --silent --show-error --location --output "${target}/gitleaks.zip" \
+	"https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_windows_x64.zip"
+GITLEAKS_WINDOWS_SHASUM_NEW=$(sha256sum "${target}/gitleaks.zip" | cut -d' ' -f1)
+sed -i "s/${GITLEAKS_WINDOWS_SHASUM_OLD}/${GITLEAKS_WINDOWS_SHASUM_NEW}/" "${script_dir}/../.mise.toml"
+
 TAPLO_VERSION=$(grep -F 'taplo' "${script_dir}/../.mise.toml" | grep -v 'asdf' | cut -d '=' -f2 | cut -d '#' -f1 | xargs)
 TAPLO_SHASUM_OLD=$(grep -F 'taplo' "${script_dir}/../.mise.toml" | cut -d '=' -f3 | xargs)
 curl --fail --silent --show-error --location --output "${target}/taplo.gz" \
