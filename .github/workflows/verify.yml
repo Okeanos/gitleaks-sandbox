@@ -69,7 +69,7 @@ jobs:
         id: tool-versions
         run: |
           gitleaks_version=$(grep -F 'gitleaks' .mise.toml | cut -d '=' -f2 | cut -d '#' -f1 | xargs)
-          gitleaks_shasum=$(grep -F 'gitleaks' .mise.toml | cut -d '=' -f3 | xargs)
+          gitleaks_shasum=$(grep -F 'gitleaks' .mise.toml | cut -d '=' -f3 | cut -d ',' -f1 | xargs)
           echo "gitleaks_version=${gitleaks_version}" >> "$GITHUB_OUTPUT"
           echo "gitleaks_shasum=${gitleaks_shasum}" >> "$GITHUB_OUTPUT"
       - name: Install Gitleaks
@@ -94,6 +94,7 @@ jobs:
           gitleaks_shasum=$(grep -F 'gitleaks' .mise.toml | cut -d '=' -f4 | xargs)
           echo "gitleaks_version=${gitleaks_version}" >> "$GITHUB_OUTPUT"
           echo "gitleaks_shasum=${gitleaks_shasum}" >> "$GITHUB_OUTPUT"
+        shell: bash
       - name: Gitleaks PowerShell
         env:
           GITLEAKS_VERSION: ${{ steps.tool-versions.outputs.gitleaks_version }}
